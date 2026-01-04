@@ -26,7 +26,9 @@ export default function PlaylistSongs({ songs, playlistId }: Props) {
   const formatDuration = (dt: number) => {
     const minutes = Math.floor(dt / 1000 / 60);
     const seconds = Math.floor((dt / 1000) % 60);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const handlePlayAll = () => {
@@ -41,7 +43,7 @@ export default function PlaylistSongs({ songs, playlistId }: Props) {
     setLoadingMore(true);
     const more = await getPlaylistTracks(playlistId, PAGE_SIZE, data.length);
     if (more.length > 0) {
-      setData(prev => [...prev, ...more]);
+      setData((prev) => [...prev, ...more]);
       if (more.length < PAGE_SIZE) setHasMore(false);
     } else {
       setHasMore(false);
@@ -66,6 +68,10 @@ export default function PlaylistSongs({ songs, playlistId }: Props) {
           </button>
           <span className="text-xs text-gray-500">共 {data.length} 首</span>
         </div>
+        <span className="text-xs text-gray-500">
+          （首次加载页面请点击右方加载按钮！→）
+        </span>
+
         {playlistId && (
           <button
             onClick={loadMore}
@@ -90,28 +96,44 @@ export default function PlaylistSongs({ songs, playlistId }: Props) {
           {data.map((song, index) => {
             const isCurrent = currentSong?.id === song.id;
             return (
-              <tr 
-                key={song.id} 
+              <tr
+                key={song.id}
                 className={`
                   h-8 hover:bg-gray-100 dark:hover:bg-zinc-800 group
-                  ${(index % 2 === 0) ? 'bg-white dark:bg-black' : 'bg-gray-50 dark:bg-zinc-900'}
+                  ${
+                    index % 2 === 0
+                      ? "bg-white dark:bg-black"
+                      : "bg-gray-50 dark:bg-zinc-900"
+                  }
                 `}
                 onDoubleClick={() => handlePlay(song)}
               >
                 <td className="text-center text-gray-400 w-12">
                   <div className="flex items-center justify-center">
-                    <span className={`group-hover:hidden ${isCurrent ? 'text-red-600' : ''}`}>
+                    <span
+                      className={`group-hover:hidden ${
+                        isCurrent ? "text-red-600" : ""
+                      }`}
+                    >
                       {index + 1}
                     </span>
-                    <Play 
+                    <Play
                       onClick={() => handlePlay(song)}
-                      className={`w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer hidden group-hover:block ${isCurrent ? 'fill-red-600 text-red-600 block' : ''}`} 
+                      className={`w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer hidden group-hover:block ${
+                        isCurrent ? "fill-red-600 text-red-600 block" : ""
+                      }`}
                     />
                   </div>
                 </td>
                 <td className="px-2 truncate max-w-[300px]">
-                  <span className={`cursor-pointer hover:underline ${isCurrent ? 'text-red-600' : 'text-gray-800 dark:text-gray-200'}`}>
-                    {song.name || '未知歌曲'}
+                  <span
+                    className={`cursor-pointer hover:underline ${
+                      isCurrent
+                        ? "text-red-600"
+                        : "text-gray-800 dark:text-gray-200"
+                    }`}
+                  >
+                    {song.name || "未知歌曲"}
                   </span>
                 </td>
                 <td className="px-2 text-gray-500 font-sans">
@@ -119,12 +141,12 @@ export default function PlaylistSongs({ songs, playlistId }: Props) {
                 </td>
                 <td className="px-2 truncate max-w-[150px] text-gray-600 dark:text-gray-400">
                   <span className="cursor-pointer hover:underline">
-                    {song.ar?.[0]?.name || '未知歌手'}
+                    {song.ar?.[0]?.name || "未知歌手"}
                   </span>
                 </td>
                 <td className="px-2 truncate max-w-[200px] text-gray-600 dark:text-gray-400">
                   <span className="cursor-pointer hover:underline">
-                    {song.al?.name || '未知专辑'}
+                    {song.al?.name || "未知专辑"}
                   </span>
                 </td>
               </tr>
