@@ -22,7 +22,8 @@ export interface Album {
 export interface Playlist {
   id: number;
   name: string;
-  coverImgUrl: string;
+  coverImgUrl?: string;
+  picUrl?: string; // /personalized returns picUrl
   description: string;
   trackCount: number;
   playCount: number;

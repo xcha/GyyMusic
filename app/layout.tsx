@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 import Header from "@/components/layout/Header";
-import PlayerBar from "@/components/layout/PlayerBar";
+import { PlayerBar } from "@/components/layout/PlayerBar";
 
 export default function RootLayout({
   children,
@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="referrer" content="no-referrer" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased pb-16 pt-16`}
       >
